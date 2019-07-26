@@ -1,4 +1,4 @@
-\documentclass[zihao=-4,UTF8]{ctexart}
+\documentclass[zihao=-4]{ctexart}
 
 \usepackage{amsmath}
 \usepackage{graphicx}
@@ -6,6 +6,8 @@
 \usepackage{listing}
 \usepackage{geometry}
 \usepackage{multicol}
+\usepackage{gbt7714}
+\usepackage{enumerate}
 
 \geometry{left=3cm,right=2.5cm,top=2.5cm,bottom=2.5cm}
 
@@ -44,7 +46,7 @@
 \vbox{}
 \vbox{}
 
-\large
+
 \centerline{\underline{李亦龙 18373580}}\par
 \centerline{\underline{叶凡 18374449}}\par
 \centerline{\underline{栾帅 18373298}}\par
@@ -65,12 +67,32 @@
 \tableofcontents
 
 \section{问题重述}
-基因共表达网络(Gene co-expression network)是现代生物基因工程研究的重要方向
+基因共表达网络(Gene co-expression network)是现代生物基因工程研究的重要方向, 也是研究基因与基因之间对于在某疾病上的表达影响的重要方法. 网络中节点代表基因, 节点与节点之间的连线代表基因之间的联系. 一张某疾病的基因共表达网络形如:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{pic/example.jpg}
+    \caption{基因共表达网络示例\cite{example}}
+\end{figure}
 
+根据对表达出某疾病的许多样本的基因测序结果, 我们可以通过对同时出现的基因进行统计, 认为同时出现次数越多的基因可能会对该性状起阳性结果, 而出现次数较少的可以认为对该性状起阴性结果, 次数适中的认为是无关基因.
 \section{假设与符号}
+\subsection{假设}
 
-\section{建立模型}
+\begin{enumerate}[I.]
+    \item 基因与基因之间相对独立, 即全体样本中基因频率为定值
+    \item 基因A与基因B之间的关系有三种: 正相关, 负相关和无关
+    \item 视在实验选定的样本里出现次数多的基因对该疾病有促进作用
+\end{enumerate}
 
+
+
+\section{问题分析}
+\subsection{基因之间的联系表达}
+基因之间的复杂的表达关系无法直接用数据表达, 因为基因A可能会对基因B起正相关, 对基因C起负相关, 而基因B和C对疾病都可能呈现正相关效果. 为了解释清楚这种关系, 我们将A,B,C与疾病之间的复杂关系描述为A与B, B与C, A与C之间的关系, 即相当于描述为网络中节点之间的关系.
+
+
+
+kanbudong\cite{ranger}wosss
 \section{求解问题}
 
 \newpage
@@ -81,6 +103,7 @@
 \section*{附录}
 
 \bibliography{library}
+
 \section*{支撑材料文件列表}
 
 \end{document}
