@@ -33,6 +33,5 @@ for i in range(data.shape[0]):
         if count%100 ==0:
             pos = nx.circular_layout(G)  #图中的点呈环形分布
             nx.draw(G,pos,with_labels=True,node_size = 1,node_color = "#bb99ff",edge_color = edge_color,width = 0.1,font_size = 1,font_color="black")# 画图,设置相关属性
-            plt.savefig('plot123_4.png', dpi=300)  #存图
+            plt.savefig('plot'+str(count)+'.png', dpi=300)  #存图
             print(count)
-            count =1

@@ -116,14 +116,14 @@
 
 \section{问题分析}
 \subsection{基因之间的联系表达}
-基因之间的复杂的表达关系无法直接用数据表达, 因为基因A可能会对基因B起正相关, 对基因C起负相关, 而基因B和C对疾病都可能呈现正相关效果. 为了解释清楚这种关系, 我们将A,B,C与疾病之间的复杂关系描述为A与B, B与C, A与C之间的关系, 即相当于描述为网络中节点之间的关系.
+基因之间的复杂的表达关系往往无法直接用数据表达, 因为基因A可能会对基因B起正相关作用, 对基因C起负相关, 而基因B和C对疾病都可能呈现正相关效果. 为了解释清楚这种关系, 我们将A,B,C与疾病之间的复杂关系描述为A与B, B与C, A与C之间的关系, 即相当于描述为网络中节点之间的关系.
 
-由于基因
+由于基因之间的相对独立性, 我们可以在考虑AB之间的互相作用是忽略C
 
 \subsection{等位基因}
 等位基因指位于一对同源染色体相同位置上控制同一性状不同形态的基因.
 
-在GEO数据库中, 等位基因会使用多个编号来标记, 即若A, B互为等位基因, 则A与B的ENSG编号是不同的. 这样就代表着在数据中会包含互补的数据(即等位基因). 这样的数据一般呈现A与B的出现频率相加约等于100\%的情况, 与我们认为的负相关情况类似, 所以我们不单独考虑等位基因对图中联系造成的影响.
+在GEO数据库中, 等位基因会使用多个编号来标记, 即若A, B互为等位基因, 则A与B的ENSG编号是不同的. 这样就代表着在数据中会包含互补的数据(即等位基因). 这样的数据一般呈现A与B的出现频率相加约等于100\%的情况, 与我们认为的负相关情况类似, 所以我们不单独考虑等位基因对图中联系造成的影响, 而是将等位基因看做普通基因以参与计算.
 
 \section{求解问题}
 \subsection{皮尔逊积矩相关系数}
@@ -131,25 +131,37 @@
 
 皮尔逊积矩相关系数(Pearson product-moment correlation coefficient，又称作PPMCC或PCCs, 文章中常用r或Pearson's r表示)是一种比较非中心化数据相似程度的一种方法, 该方法的特点在于得到的结果不受线性变换的影响, 即结果与数据的单位等无关.
 
-由于基因的测量量单位FPKM(Fragments Per Kilobase of exon model per Million mapped fragments, 每千个碱基的转录每百万映射读取的fragments)与基因本身的规模有关, 所以数据库中得到的数据的均值由于基因的变化会发生较大的升降. 为了抵消这种对数据本身的拉伸对数据特征造成的破坏, 我们选择使用皮尔逊积矩相关系数这种更加本质的特征, 它反映了两组数据在线性上的相似性, 而非数据大小. 
-
-皮尔逊积矩相关系数的取值范围在$[-1,1]$, 假设参数$\alpha$
-
-\subsection{结果的可视化}
-
-仅仅获得相关系数的矩阵只是数据分析的一步
+下列三式可以求的不同的皮尔逊积矩相关系数, 我们在这里采用第一个式子.
 
 \begin{equation}
     \rho_{X, Y}=\frac{\operatorname{cov}(X, Y)}{\sigma_{X} \sigma_{Y}}=\frac{E\left[\left(X-\mu_{X}\right)\left(Y-\mu_{Y}\right)\right]}{\sigma_{X} \sigma_{Y}}
 \end{equation}
 
-\begin{equation}
+\begin{equation*}
     r=\frac{\sum_{i=1}^{n}\left(X_{i}-\overline{X}\right)\left(Y_{i}-\overline{Y}\right)}{\sqrt{\sum_{i=1}^{n}\left(X_{i}-\overline{X}\right)^{2}} \sqrt{\sum_{i=1}^{n}\left(Y_{i}-\overline{Y}\right)^{2}}}
-\end{equation}
+\end{equation*}
 
-\begin{equation}
+\begin{equation*}
     r=\frac{1}{n-1} \sum_{i=1}^{n}\left(\frac{X_{i}-\overline{X}}{\sigma_{X}}\right)\left(\frac{Y_{i}-\overline{Y}}{\sigma_{Y}}\right)
-\end{equation}
+\end{equation*}
+
+由于基因的测量量单位FPKM(Fragments Per Kilobase of exon model per Million mapped fragments, 每千个碱基的转录每百万映射读取的fragments)与基因本身的规模有关, 所以数据库中得到的数据的均值由于基因的变化会发生较大的升降. 为了抵消这种对数据本身的拉伸对数据特征造成的破坏, 我们选择使用皮尔逊积矩相关系数这种更加本质的特征, 它反映了两组数据在线性上的相似性, 而非数据大小. 
+
+皮尔逊积矩相关系数的取值范围在$[-1,1]$, 假设参数$\alpha$, 又假设$IV$中的内容, 只要选定了$\alpha$的值, 我们就可以将基因之间的关系区别为上述三种关系, 这样形成的矩阵无疑会对后续研究带来便利. $\alpha$的大小直接对结果造成影响, 根据文献\cite{wiki:pierxun}, 我们选取$\alpha=0.9$, 这样可以得到数据量不是特别巨大而且又可靠的联系矩阵.
+
+我们利用python计算了GSE81089的数据, 所得到的矩阵可以在支撑材料里找到.
+
+\subsection{结果的可视化}
+
+仅仅获得相关系数的矩阵只是数据分析的一步, 要获得对于后续研究有所作用的直观图表, 我们需要将上述矩阵可视化. 基于假设$I$和$IV$, 我们可以认为基因在图中是点, 基因与基因之间的关系用不同颜色的线来代替. 如图\ref{1}, 其中红色的线表示该线所连接的一对基因之间的关系是正相关, 蓝色的线表示负相关. 无关的基因之间没有连线.
+\begin{figure}[H]
+    \centering
+    \caption{简化的基因共表达网络}
+    \label{1}
+    \includegraphics[width=0.8\textwidth]{pic/plot100.png}
+\end{figure}
+
+图\ref{1}只是整张图的一部分. 为了可以在论文里清晰的看出基因之间的联系, 我们舍弃了部分基因, 采取一部分基因来画出图\ref{1}. 完整的图可以在支撑材料里找到.
 
 \newpage
 \section*{结论}
