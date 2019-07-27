@@ -19,14 +19,14 @@ for i in range(data.shape[0]):
             G.add_edge(i,j)
             edge_color.append("red")
             pos = nx.circular_layout(G)
-            nx.draw(G,pos,with_labels=True,node_size = 50,node_color = "blue",edge_color = edge_color)
+            #nx.draw(G,pos,with_labels=True,node_size = 50,node_color = "blue",edge_color = edge_color)
             jishu+=1
-            if jishu%100==0 : plt.show()
+            #if jishu%100==0 : plt.show()
         elif t[0][1] < -0.85 :
             G.add_edge(i,j)
             edge_color.append("blue")
             pos = nx.circular_layout(G)
-            nx.draw(G,pos,with_labels=True,node_size = 50,node_color = "blue",edge_color = edge_color)
+            #nx.draw(G,pos,with_labels=True,node_size = 50,node_color = "blue",edge_color = edge_color)
             jishu+=1
-            if jishu%100==0 : plt.show()
-plt.show()
+            #if jishu%100==0 : plt.show()
+#plt.show()
