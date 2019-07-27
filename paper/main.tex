@@ -58,6 +58,9 @@
 \newpage
 \section*{摘要}
 
+本文基于GEO数据库公开的对于某些疾病的多个样本的基因测序结果, 
+
+
 \newpage
 
 \section*{队伍声明}
@@ -90,6 +93,8 @@
     \end{enumerate}
 \end{enumerate}
 
+\subsection{符号}
+
 
 
 \section{问题分析}
@@ -107,6 +112,26 @@
 
 kanbudong\cite{ranger}wosss
 \section{求解问题}
+\subsection{皮尔逊积矩相关系数}
+对于两组数据, 我们可以利用皮尔逊积矩相关系数\cite{wiki:pierxun}来求他们之间的相似程度. 
+
+皮尔逊积矩相关系数(Pearson product-moment correlation coefficient，又称作PPMCC或PCCs, 文章中常用r或Pearson's r表示)是一种比较非中心化数据相似程度的一种方法, 该方法的特点在于得到的结果不受线性变换的影响, 即结果与数据的单位等无关.
+
+由于基因的测量量单位FPKM(Fragments Per Kilobase of exon model per Million mapped fragments, 每千个碱基的转录每百万映射读取的fragments)与基因本身的规模有关, 所以数据库中得到的数据的均值由于基因的变化会发生较大的升降. 为了抵消这种对数据本身的拉伸对数据特征造成的破坏, 我们选择使用皮尔逊积矩相关系数这种更加本质的特征, 它反映了两组数据在线性上的相似性, 而非数据大小. 
+
+皮尔逊积矩相关系数的取值范围在$\[-1,1\]$, 假设参数
+
+\begin{equation}
+    \rho_{X, Y}=\frac{\operatorname{cov}(X, Y)}{\sigma_{X} \sigma_{Y}}=\frac{E\left[\left(X-\mu_{X}\right)\left(Y-\mu_{Y}\right)\right]}{\sigma_{X} \sigma_{Y}}
+\end{equation}
+
+\begin{equation}
+    r=\frac{\sum_{i=1}^{n}\left(X_{i}-\overline{X}\right)\left(Y_{i}-\overline{Y}\right)}{\sqrt{\sum_{i=1}^{n}\left(X_{i}-\overline{X}\right)^{2}} \sqrt{\sum_{i=1}^{n}\left(Y_{i}-\overline{Y}\right)^{2}}}
+\end{equation}
+
+\begin{equation}
+    r=\frac{1}{n-1} \sum_{i=1}^{n}\left(\frac{X_{i}-\overline{X}}{\sigma_{X}}\right)\left(\frac{Y_{i}-\overline{Y}}{\sigma_{Y}}\right)
+\end{equation}
 
 \newpage
 \section*{结论}
