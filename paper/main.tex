@@ -107,9 +107,9 @@
         \hline
         $\rho$ & 皮尔逊积矩相关系数\\
         $\alpha$ & 相关系数中的参数, 用于确定基因之间的关系\\
+        $X/Y$ & 互相比较的两列数据, 即两个基因所对应的的所有样本上的数值\\
         \hline
     \end{tabular}
-    
 \end{table}
 
 
@@ -125,7 +125,6 @@
 
 在GEO数据库中, 等位基因会使用多个编号来标记, 即若A, B互为等位基因, 则A与B的ENSG编号是不同的. 这样就代表着在数据中会包含互补的数据(即等位基因). 这样的数据一般呈现A与B的出现频率相加约等于100\%的情况, 与我们认为的负相关情况类似, 所以我们不单独考虑等位基因对图中联系造成的影响.
 
-kanbudong\cite{ranger}wosss
 \section{求解问题}
 \subsection{皮尔逊积矩相关系数}
 对于两组数据, 我们可以利用皮尔逊积矩相关系数\cite{wiki:pierxun}来求他们之间的相似程度. 
@@ -135,6 +134,10 @@ kanbudong\cite{ranger}wosss
 由于基因的测量量单位FPKM(Fragments Per Kilobase of exon model per Million mapped fragments, 每千个碱基的转录每百万映射读取的fragments)与基因本身的规模有关, 所以数据库中得到的数据的均值由于基因的变化会发生较大的升降. 为了抵消这种对数据本身的拉伸对数据特征造成的破坏, 我们选择使用皮尔逊积矩相关系数这种更加本质的特征, 它反映了两组数据在线性上的相似性, 而非数据大小. 
 
 皮尔逊积矩相关系数的取值范围在$[-1,1]$, 假设参数$\alpha$
+
+\subsection{结果的可视化}
+
+仅仅获得相关系数的矩阵只是数据分析的一步
 
 \begin{equation}
     \rho_{X, Y}=\frac{\operatorname{cov}(X, Y)}{\sigma_{X} \sigma_{Y}}=\frac{E\left[\left(X-\mu_{X}\right)\left(Y-\mu_{Y}\right)\right]}{\sigma_{X} \sigma_{Y}}
