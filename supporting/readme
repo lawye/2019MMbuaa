@@ -1,0 +1,19 @@
+Folder PATH listing for volume 文件
+Volume serial number is 00000226 F4B8:789C
+E:.
+│   readme
+│   readme.md
+│   
+├───data
+│       FPKM_cufflinks.tsv
+│       
+├───module
+│       math.py
+│       math_model.ipynb
+│       test.py
+│       
+└───result
+        plot100.png
+        plotfull.png
+        plotmid.png
+        
