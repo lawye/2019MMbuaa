@@ -48,15 +48,16 @@
 \rightline{\Large ------基因关系数据分析以及可视化方法探究}
 \vbox{}
 \vbox{}
-\begin{center}
-    \large
-    \underline{李亦龙 18373580}\\
-    \underline{叶凡 18374449}\\
-    \underline{栾帅 18373298}\\
-    队伍联系电话:\underline{13718250032}\\
-    队伍联系邮箱:\underline{18373580@buaa.edu.cn}
-\end{center}
-
+\begin{table}[b]
+    \centering
+    \begin{tabular}{cl}
+        姓名及学号: & \underline{李亦龙 18373580}\\
+        姓名及学号: & \underline{叶凡 18374449}\\
+        姓名及学号: & \underline{栾帅 18373298}\\
+        队伍联系电话:&\underline{13718250032}\\
+        队伍联系邮箱:&\underline{18373580@buaa.edu.cn}
+    \end{tabular}
+\end{table}
 \normalsize
 \renewcommand{\headrulewidth}{0pt}%没有页眉装饰线
 \pagenumbering{gobble} %封面无页码
@@ -189,7 +190,7 @@ GEO数据库(Gene Expression Omnibus)是由美国国家生物信息中心(Nation
 \newpage
 \section*{结论}
 
-人体基因数量有60000+, 这样做出的两两关系在理论上不超过3.6e9个, 这样的数字仅凭人力是无法处理的, 而我们通过相关系数的方法将这个数量降到了20000以下,即便这样, 可视化方法画出来的图依旧是一团乱麻, 难以分析. 
+人体基因数量有60000+, 这样做出的两两关系在理论上不超过3.6e9个, 这样的数字仅凭人力是无法处理的, 而我们通过相关系数的方法将这个数量降到了20000以下,即便这样, 可视化方法画出来的图依旧是图形复杂, 较难分析. 
 
 实际上, 如果采用上述提取的数据辅以基因本身的名字以及特性, 研究人员可以由他们的专业知识对其中某几个或者某几十个基因提取出相关因子, 这样就可以辅助研究的进行.
 
@@ -214,6 +215,7 @@ GEO数据库(Gene Expression Omnibus)是由美国国家生物信息中心(Nation
 .3 \text{plot100.png}\DTcomment{取其中100条关系所绘制的图像}.
 .3 \text{plotfull.png}\DTcomment{所有关系绘制的图像}.
 .3 \text{plotmid.png}\DTcomment{其中一部分关系绘制的图像}.
+.3 \text{data.csv}\DTcomment{相关系数矩阵}.
 .2 \text{readme}\DTcomment{文件列表}.
 }
 \end{document}
