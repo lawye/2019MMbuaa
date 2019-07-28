@@ -9,14 +9,18 @@
 \usepackage{gbt7714}
 \usepackage{enumerate}
 \usepackage{dirtree}
+\usepackage{fancyhdr}
 
+
+\pagestyle{fancy}
 \geometry{left=3cm,right=2.5cm,top=2.5cm,bottom=2.5cm}
-
 \linespread{1.8}
 
 
 
 \begin{document}
+\lhead{}%设置左页眉为空
+\rhead{}%设置左页眉为空
 \begin{figure}
     \begin{minipage}{0.6\linewidth}
         \includegraphics{pic/xiaohui.png}
@@ -30,10 +34,7 @@
         队\ \ \ 号:\underline{ 030 }
     \end{minipage}
 \end{figure}
-
 \vbox{}
-\vbox{}
-
 \begin{figure}[H]
     \centering
     \includegraphics{pic/xiaoming.png}
@@ -41,33 +42,41 @@
 \vbox{}
 \centerline{\textbf{\Huge{2019年数学建模竞赛}}}
 \vbox{}
+\begin{center}
+    \LARGE 基于皮尔逊积矩相关系数的基因共表达网络
+\end{center}
+\rightline{\Large ------基因关系数据分析以及可视化方法探究}
 \vbox{}
-\centerline{\LARGE{biaoti}}
 \vbox{}
-\vbox{}
-\vbox{}
-
-
-\centerline{\underline{李亦龙 18373580}}\par
-\centerline{\underline{叶凡 18374449}}\par
-\centerline{\underline{栾帅 18373298}}\par
-\centerline{队伍联系电话:\underline{13718250032}}\par
-\centerline{队伍联系邮箱:\underline{18373580@buaa.edu.cn}}\par
+\begin{center}
+    \large
+    \underline{李亦龙 18373580}\\
+    \underline{叶凡 18374449}\\
+    \underline{栾帅 18373298}\\
+    队伍联系电话:\underline{13718250032}\\
+    队伍联系邮箱:\underline{18373580@buaa.edu.cn}
+\end{center}
 
 \normalsize
-
+\renewcommand{\headrulewidth}{0pt}%没有页眉装饰线
+\pagenumbering{gobble} %封面无页码
 \newpage
 \section*{摘要}
 
 本文基于GEO数据库公开的对于某些疾病的多个样本的基因测序结果, 
 
-
+\pagenumbering{roman} %摘要目录页小写罗马
 \newpage
 
 \section*{队伍声明}
 
 我代表参赛队伍全体队员声明，本论文及其研究工作是由队伍成员独立完成的，在完成论文时所利用的一切资料均已在参考文献中列出 
 \newpage
+\renewcommand{\headrulewidth}{0.4pt} %恢复页眉装饰线
+\fancyhead[HC]{北京航空航天大学数学建模竞赛} %设置居中页眉
+\pagenumbering{arabic} %正文页码从1开始，用阿拉伯数字
+\setcounter{page}{1} 
+
 \tableofcontents
 
 \section{问题重述}
@@ -86,15 +95,13 @@
 \subsection{数据来源}
 GEO数据库(Gene Expression Omnibus)是由美国国家生物信息中心(National Center for Biotechnology Information)提供维护服务的公共基因表达数据资源. 该数据库储存实验采集的原始数据并将其公开, 我们通过对GEO数据库上某个实验相关样本数据集系列(Series)进行分析, 就可以获得对基因间关系的深入认知, 以实现对疾病诱导原因的深入研究, 以及疾病的辅助治疗.
 
-由于队伍成员设备运算能力的限制, 在处理单个系列时需要耗费大量时间(约6小时), 最后我们决定暂时只以GSE81089为数据来源, 计算非小细胞肺癌(non-small cell lungcancer, NSCLC)的基因关联网络.
+由于队伍成员设备运算能力的限制, 在处理单个系列时需要耗费大量时间(约6小时), 最后我们决定暂时只以GSE81089为数据来源, 计算非小细胞肺癌(non-small cell lung cancer, NSCLC)的基因关联网络.
 \subsection{疾病介绍}
-肺癌是世界上最常见的恶性肿瘤之一, 并且肺癌发生过程涉及的分子机制仍未被全部解开. 非小细胞肺癌包括鳞状细胞癌, 腺癌, 大细胞癌, 与小细胞癌相比其癌细胞生长分裂较慢, 扩散转移相对较晚. 非小细胞肺癌约占所有肺癌的约75\%的患者发现时已处于中晚期, 5年生存率很低. 而在非小细胞肺癌中, 病变部位的组织学分类决定了患者治疗的方式. 传统治疗只是针对病变部位的组织进行治疗,可以说治标不治本. 如果我们可以得知诱导NSCLC出现的基因是什么, 那么通过无效化这个基因就可以避免NSCLC的出现, 这样就形成了一种新的治疗方法.
+肺癌\cite{wiki:NSCLC}是世界上最常见的恶性肿瘤之一, 并且肺癌发生过程涉及的分子机制仍未被全部解开. 非小细胞肺癌包括鳞状细胞癌, 腺癌, 大细胞癌, 与小细胞癌相比其癌细胞生长分裂较慢, 扩散转移相对较晚. 非小细胞肺癌约占所有肺癌的约75\%的患者发现时已处于中晚期, 5年生存率很低. 而在非小细胞肺癌中, 病变部位的组织学分类决定了患者治疗的方式. 传统治疗只是针对病变部位的组织进行治疗,可以说治标不治本. 如果我们可以得知诱导NSCLC出现的基因是什么, 那么通过无效化这个基因就可以避免NSCLC的出现, 这样就形成了一种新的治疗方法.
 \subsection{初步分析}
 利用GSE81089三个mRNA芯片表达数据以及NSCLC表达数据分别做对照……
 
 我们下载的数据是GEO上储存的经过实验团队初步处理的NSCLC的基因表达数据, 这是实验团队将199个来自seq的患病样本和142个正常样本进行基因测序比较后的结果. 经过实验团队的初步处理, 我们已经可以利用比较便利的方法读取数据, 而不是对实验原始数据进行文本处理. 
-
-
 
 \section{假设与符号}
 \subsection{假设}
